@@ -119,7 +119,7 @@
       var selectedCity = citySelect.value;
       var selectedSigungu = sigunguSelect.value;
 
-      const apiKey = 'j9jtoet82_49ej4tt2tbtc6r99_28re2';
+      const apiKey = 'b6c66f0c39240fae0227e0122bbcf604';
       var url;
 
       if (selectedCity === '제주시') {
