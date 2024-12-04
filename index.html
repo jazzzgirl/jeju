@@ -1,493 +1,61 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>제주도 치매안심센터</title>
-  <style>
-    /* CSS 스타일 */
-
-    /* 전체 리셋 및 기본 스타일 설정 */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    /* 전체 배경색 및 폰트 컬러 설정 */
-    body {
-      background-color: #f5f5f5;
-      color: #333;
-    }
-
-    /* 페이지 제목 스타일 */
-    h2 {
-      font-size: 2.5rem;
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    /* 지도 스타일 */
-    #map {
-      width: 70%;
-      height: 700px;
-      margin: 30px auto 0;
-      margin-left: 48px;
-      margin-right: 0;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    /* 콤보박스 컨테이너 스타일 */
-    .combo-container {
-      text-align: center;
-      margin-top: 30px;
-      margin-bottom: 20px;
-    }
-
-    /* 레이블 스타일 */
-    label {
-      font-size: 1.2rem;
-      margin-right: 10px;
-    }
-
-    /* 셀렉트 박스 스타일 */
-    select {
-      font-size: 1.2rem;
-      padding: 8px 15px;
-      width: 150px;
-      height: 40px;
-      margin-right: 15px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      background-color: white;
-      cursor: pointer;
-      transition: border-color 0.3s ease;
-    }
-
-    select:hover {
-      border-color: #00256c;
-    }
-
-    /* 검색 버튼 스타일 */
-    #searchButton {
-      font-size: 1.2rem;
-      padding: 8px 20px;
-      background-color: #00256c;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    #searchButton:hover {
-      background-color: #001f5c;
-    }
-
-    /* 검색 결과 컨테이너 스타일 */
-    #searchResults {
-      width: 30%;
-      margin-top: 30px;
-      margin-right: 48px;
-      background-color: var(--jeju-green-light);  /* 연한 한라산 녹색 */
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    /* 검색 결과 제목 스타일 */
-    #resultsTitle {
-      font-size: 1.3rem;
-      padding: 15px;
-      margin-bottom: 10px;
-      background-color: var(--jeju-green);  /* 한라산 녹색 */
-      color: white;
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-    }
-
-    /* 검색 결과 리스트 스타일 */
-    #resultsList {
-      list-style: none;
-      padding: 10px;
-      overflow-y: auto;
-      max-height: 600px;
-    }
-
-    /* 검색 결과 리스트 아이템 스타일 */
-    #resultsList li {
-      margin: 10px;
-      margin-bottom: 15px;
-      font-size: 1.1rem;
-      border: none;
-      background-color: white;
-      padding: 15px;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    /* 검색 결과 리스트 아이템 호버 스타일 */
-    #resultsList li:hover {
-      background-color: var(--jeju-orange-light);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    /* 선택된 정보 윈도우 스타일 */
-    .selected-info-window {
-      background-color: #ffceb4 !important;
-    }
-
-    /* 지도와 검색 결과를 담는 부모 컨테이너 뒤에 추가 */
-    #centerDetail {
-      width: 70%;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    #centerDetail h3 {
-      color: #333;
-      margin-bottom: 15px;
-    }
-
-    #detailContent {
-      line-height: 1.6;
-    }
-
-    .detail-item {
-      margin-bottom: 10px;
-      padding: 8px;
-      background-color: #f8f9fa;
-      border-radius: 5px;
-    }
-
-    /* 스크롤바 스타일 수정 */
-    #resultsList::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    #resultsList::-webkit-scrollbar-track {
-      background: var(--jeju-gray-light);
-      border-radius: 4px;
-    }
-
-    #resultsList::-webkit-scrollbar-thumb {
-      background: var(--jeju-green);
-      border-radius: 4px;
-    }
-
-    #resultsList::-webkit-scrollbar-thumb:hover {
-      background: var(--jeju-orange);
-    }
-
-    /* 카드 헤더 스타일 */
-    .card-header {
-      background-color: var(--jeju-green);
-      color: white;
-    }
-
-    /* 상세 정보 라벨 스타일 */
-    .detail-item strong {
-      color: var(--jeju-green);
-    }
-
-    /* 색상 변수 정의 */
-    :root {
-        --jeju-orange: #FF8C0A;    /* 감귤 */
-        --jeju-green: #1B7B5D;     /* 한라산 */
-        --jeju-gray: #4B4B4B;      /* 현무암 */
-        --jeju-yellow: #FFB81C;    /* 유채꽃 */
-        
-        /* 연한 버전의 색상들 */
-        --jeju-orange-light: #FFF3E0;
-        --jeju-green-light: #E8F5F0;
-        --jeju-gray-light: #F5F5F5;
-        --jeju-yellow-light: #FFF8E7;
-    }
-
-    /* 검색 버튼 스타일 */
-    #searchButton {
-        background-color: var(--jeju-orange);
-        color: white;
-    }
-
-    #searchButton:hover {
-        background-color: var(--jeju-yellow);
-    }
-
-    /* 상세 정보 카드 스타일 */
-    .detail-card {
-        background-color: white;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    .card-header {
-        background-color: var(--jeju-green);
-        color: white;
-    }
-
-    .detail-item {
-        background-color: var(--jeju-gray-light);
-        margin-bottom: 10px;
-        padding: 15px;
-        border-radius: 8px;
-        transition: background-color 0.3s ease;
-    }
-
-    .detail-item:hover {
-        background-color: var(--jeju-orange-light);
-    }
-
-    .detail-item strong {
-        color: var(--jeju-green);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제주도 치매안심센터</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- 페이지 제목 -->
-  <h2>제주도 치매안심센터 찾기</h2>
+    <!-- 페이지 제목 -->
+    <h2>제주도 치매안심센터 찾기</h2>
 
-  <!-- 콤보박스 컨테이너 -->
-  <div class="combo-container">
-    <!-- 시/도 선택 레이블 및 셀렉트 박스 -->
-    <label for="citySelect">시/도 선택</label>
-    <select id="citySelect">
-      <option value="" style="display:none;">(시/도 선택)</option>
-      <option value="제주시">제주시</option>
-      <option value="서귀포시">서귀포시</option>
-    </select>
+    <!-- 콤보박스 컨테이너 -->
+    <div class="combo-container">
+        <!-- 시/도 선택 레이블 및 셀렉트 박스 -->
+        <label for="citySelect">시/도 선택</label>
+        <select id="citySelect">
+            <option value="" style="display:none;">(시/도 선택)</option>
+            <option value="제주시">제주시</option>
+            <option value="서귀포시">서귀포시</option>
+        </select>
 
-    <!-- 시/군/구 선택 레이블 및 셀렉트 박스 -->
-    <label for="sigunguSelect">시/군/구 선택</label>
-    <select id="sigunguSelect">
-      <!-- 초기에는 전체 옵션만 표시 -->
-    </select>
+        <!-- 시/군/구 선택 레이블 및 셀렉트 박스 -->
+        <label for="sigunguSelect">시/군/구 선택</label>
+        <select id="sigunguSelect">
+            <!-- 초기에는 전체 옵션만 표시 -->
+        </select>
 
-    <!-- 검색 버튼 -->
-    <button id="searchButton">검색
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-      </svg>
-    </button>
-  </div>
-
-  <!-- 지도와 검색 결과를 담는 부모 컨테이너 -->
-  <div style="display: flex; justify-content: space-between;">
-
-    <!-- 지도 컨테이너 -->
-    <div id="map" style="width: 70%; height:700px;"></div>
-
-    <!-- 검색 결과 컨테이너 -->
-    <div id="searchResults">
-      <!-- 검색 결과 제목 -->
-      <h3 id="resultsTitle">검색 결과</h3>
-      <!-- 검색 결과 리스트 -->
-      <ul id="resultsList"></ul>
+        <!-- 검색 버튼 -->
+        <button id="searchButton">검색
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+          </button>
     </div>
 
-  </div>
+    <!-- 지도와 검색 결과를 담는 부모 컨테이너 -->
+    <div style="display: flex; justify-content: space-between;">
+        <!-- 지도 컨테이너 -->
+        <div id="map" style="width: 70%; height:700px;"></div>
 
-  <!-- 지도와 검색 결과를 담는 부모 컨테이너 뒤에 추가 -->
-  <div id="centerDetail" style="display: none;">
-    <h3>센터 상세 정보</h3>
-    <div id="detailContent"></div>
-  </div>
+        <!-- 검색 결과 컨테이너 -->
+        <div id="searchResults">
+            <!-- 검색 결과 제목 -->
+            <h3 id="resultsTitle">검색 결과</h3>
+            <!-- 검색 결과 리스트 -->
+            <ul id="resultsList"></ul>
+        </div>
+    </div>
 
-  <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b392cff4386c93752ad191749724da0d&libraries=services"></script>
-  <script>
-    // 지도를 표시할 div 요소를 가져옵니다.
-    var mapContainer = document.getElementById('map');
+    <!-- 상세 정보 컨테이너 -->
+    <div id="centerDetail" style="display: none;">
+        <h3>센터 상세 정보</h3>
+        <div id="detailContent"></div>
+    </div>
 
-    // 지도의 옵션을 설정합니다.
-    var mapOption = {
-      center: new kakao.maps.LatLng(33.392918, 126.570658), // 지도의 중심좌표
-      level: 9 // 지도의 확대 레벨
-    };
-
-    // 지도를 생성합니다.
-    var map = new kakao.maps.Map(mapContainer, mapOption);
-
-    // 주소-좌표 변환 객체를 생성
-    var geocoder = new kakao.maps.services.Geocoder();
-
-    // 시/도 선택 콤보박스
-    var citySelect = document.getElementById('citySelect');
-
-    // 시/군/구 선택 콤보박스
-    var sigunguSelect = document.getElementById('sigunguSelect');
-
-    // 검색 버튼
-    var searchButton = document.getElementById('searchButton');
-
-    // 마커와 인포윈도우를 담을 배열
-    var markers = [];
-    var infowindows = [];
-
-    // 함수로 묶어서 재사용할 수 있도록 변경
-    function updateMap() {
-      var selectedCity = citySelect.value;
-
-      // 시/도에 따라 시/군/구 콤보박스의 옵션 변경
-      if (selectedCity === '제주시') {
-        sigunguSelect.innerHTML = '<option value="전체">전체</option><option value="제주시">제주시</option><option value="동부">동부</option><option value="서부">서부</option>';
-      }
-      if (selectedCity === '서귀포시') {
-        sigunguSelect.innerHTML = '<option value="전체">전체</option><option value="서귀포시">서귀포시</option><option value="동부">동부</option><option value="서부">서부</option>';
-      }
-    }
-
-    // 이전 마커와 인포윈도우를 제거하는 함수
-    function removeAllMarkers() {
-      markers.forEach(marker => {
-        marker.setMap(null);
-      });
-
-      infowindows.forEach(infowindow => {
-        infowindow.close();
-      });
-
-      markers = [];
-      infowindows = [];
-    }
-
-    var firstClick = false;
-
-    // 마커에 포커스를 맞추고 지도확대 함수
-    function focusMarker(entry) {
-      geocoder.addressSearch(entry.address, function (result, status) {
-        if (status === kakao.maps.services.Status.OK) {
-          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-          map.panTo(coords);
-          console.log("포커싱");
-        }
-      });
-
-      if (!firstClick) {
-        firstClick = true;
-        console.log("첫번째 클릭");
-        map.setLevel(6);
-      }
-    }
-
-    // 검색 결과 업데이트 함수
-    function updateSearchResults(results) {
-      let resultsList = document.querySelector("#resultsList")
-      resultsList.innerHTML = '';
-
-      if (results && results.length > 0) {
-        results.forEach((entry, index) => {
-          var listItem = document.createElement('li');
-          listItem.innerHTML = `<strong>${entry.centerName}</strong><br>${entry.address}`;
-          resultsList.appendChild(listItem);
-
-          listItem.addEventListener('click', function () {
-            focusMarker(entry);
-            
-            // 상세 정보 표시
-            const detailDiv = document.getElementById('centerDetail');
-            const detailContent = document.getElementById('detailContent');
-            detailDiv.style.display = 'block';
-            
-            detailContent.innerHTML = `
-              <div class="detail-item"><strong>센터명:</strong> ${entry.centerName}</div>
-              <div class="detail-item"><strong>주소:</strong> ${entry.address}</div>
-              <div class="detail-item"><strong>전화번호:</strong> ${entry.tel}</div>
-              <div class="detail-item"><strong>운영시간:</strong> ${entry.operatingTime || '정보 없음'}</div>
-              <div class="detail-item"><strong>지역구분:</strong> ${entry.regionType}</div>
-            `;
-          });
-        });
-      } else {
-        var listItem = document.createElement('li');
-        listItem.textContent = '검색 결과가 없습니다.';
-        resultsList.appendChild(listItem);
-      }
-    }
-    
-
-    // 검색 버튼 클릭 이벤트 처리 함수
-    searchButton.addEventListener('click', function () {
-      firstClick = false;
-      removeAllMarkers();
-
-      var centerPosition = new kakao.maps.LatLng(33.392918, 126.570658);
-      map.setCenter(centerPosition);
-
-      var selectedCity = citySelect.value;
-      var selectedSigungu = sigunguSelect.value;
-
-      const apiKey = 'j9jtoet82_49ej4tt2tbtc6r99_28re2';
-      var url;
-
-      if (selectedCity === '제주시') {
-        if (selectedSigungu === '전체') {
-          url = `https://open.jejudatahub.net/api/proxy/at899998bt797a8098tttD79at97bDb7/${apiKey}?sigungu=제주시&limit=100`;
-        } else {
-          url = `https://open.jejudatahub.net/api/proxy/at899998bt797a8098tttD79at97bDb7/${apiKey}?sigungu=제주시&regionType=${selectedSigungu}&limit=100`;
-        }
-      } else if (selectedCity === '서귀포시') {
-        if (selectedSigungu === '전체') {
-          url = `https://open.jejudatahub.net/api/proxy/at899998bt797a8098tttD79at97bDb7/${apiKey}?sigungu=서귀포시&limit=100`;
-        } else {
-          url = `https://open.jejudatahub.net/api/proxy/at899998bt797a8098tttD79at97bDb7/${apiKey}?sigungu=서귀포시&regionType=${selectedSigungu}&limit=100`;
-        }
-      }
-
-      var newMarkers = [];
-      var newInfowindows = [];
-
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-
-          if (data.data && data.data.length > 0) {
-            data.data.forEach((entry, index) => {
-              geocoder.addressSearch(entry.address, function(result, status) {
-                if (status === kakao.maps.services.Status.OK) {
-                  var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-                  var marker = new kakao.maps.Marker({
-                    map: map,
-                    position: coords
-                  });
-
-                  var infowindow = new kakao.maps.InfoWindow({
-                    content: `<div style="width:150px;text-align:center;padding:6px 0;">${entry.centerName}</div>`
-                  });
-                  infowindow.open(map, marker);
-
-                  newMarkers.push(marker);
-                  newInfowindows.push(infowindow);
-
-                  updateSearchResults(data.data);
-                }
-              });
-            });
-
-            markers = newMarkers;
-            infowindows = newInfowindows;
-
-            map.setLevel(9);
-          } else {
-            console.log('데이터가 없거나 형식이 다릅니다.');
-          }
-        })
-        .catch(error => {
-          console.error('데이터를 가져오는데 오류가 발생했습니다:', error);
-        });
-    })
-
-    citySelect.addEventListener('change', updateMap);
-</script>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b392cff4386c93752ad191749724da0d&libraries=services"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

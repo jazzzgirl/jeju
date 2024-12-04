@@ -1,0 +1,242 @@
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+/* 전체 배경색 및 폰트 컬러 설정 */
+body {
+background-color: #f5f5f5;
+color: #333;
+}
+
+/* 페이지 제목 스타일 */
+h2 {
+font-size: 2.5rem;
+text-align: center;
+margin-top: 20px;
+}
+
+/* 지도 스타일 */
+#map {
+width: 70%;
+height: 700px;
+margin: 30px auto 0;
+margin-left: 48px;
+margin-right: 0;
+border-radius: 15px;
+box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 콤보박스 컨테이너 스타일 */
+.combo-container {
+text-align: center;
+margin-top: 30px;
+margin-bottom: 20px;
+}
+
+/* 레이블 스타일 */
+label {
+font-size: 1.2rem;
+margin-right: 10px;
+}
+
+/* 셀렉트 박스 스타일 */
+select {
+font-size: 1.2rem;
+padding: 8px 15px;
+width: 150px;
+height: 40px;
+margin-right: 15px;
+border: 1px solid #ddd;
+border-radius: 5px;
+background-color: white;
+cursor: pointer;
+transition: border-color 0.3s ease;
+}
+
+select:hover {
+border-color: #00256c;
+}
+
+/* 검색 버튼 스타일 */
+#searchButton {
+font-size: 1.2rem;
+padding: 8px 20px;
+background-color: #00256c;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+}
+
+#searchButton:hover {
+background-color: #001f5c;
+}
+
+/* 검색 결과 컨테이너 스타일 */
+#searchResults {
+width: 30%;
+margin-top: 30px;
+margin-right: 48px;
+background-color: var(--jeju-green-light);  /* 연한 한라산 녹색 */
+border-radius: 15px;
+box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 검색 결과 제목 스타일 */
+#resultsTitle {
+font-size: 1.3rem;
+padding: 15px;
+margin-bottom: 10px;
+background-color: var(--jeju-green);  /* 한라산 녹색 */
+color: white;
+border-top-left-radius: 15px;
+border-top-right-radius: 15px;
+}
+
+/* 검색 결과 리스트 스타일 */
+#resultsList {
+list-style: none;
+padding: 10px;
+overflow-y: auto;
+max-height: 600px;
+}
+
+/* 검색 결과 리스트 아이템 스타일 */
+#resultsList li {
+margin: 10px;
+margin-bottom: 15px;
+font-size: 1.1rem;
+border: none;
+background-color: white;
+padding: 15px;
+border-radius: 10px;
+transition: all 0.3s ease;
+cursor: pointer;
+box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* 검색 결과 리스트 아이템 호버 스타일 */
+#resultsList li:hover {
+background-color: var(--jeju-orange-light);
+transform: translateY(-2px);
+box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 선택된 정보 윈도우 스타일 */
+.selected-info-window {
+background-color: #ffceb4 !important;
+}
+
+/* 지도와 검색 결과를 담는 부모 컨테이너 뒤에 추가 */
+#centerDetail {
+width: 70%;
+margin: 20px auto;
+padding: 20px;
+background-color: #fff;
+border-radius: 10px;
+box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#centerDetail h3 {
+color: #333;
+margin-bottom: 15px;
+}
+
+#detailContent {
+line-height: 1.6;
+}
+
+.detail-item {
+margin-bottom: 10px;
+padding: 8px;
+background-color: #f8f9fa;
+border-radius: 5px;
+}
+
+/* 스크롤바 스타일 수정 */
+#resultsList::-webkit-scrollbar {
+width: 8px;
+}
+
+#resultsList::-webkit-scrollbar-track {
+background: var(--jeju-gray-light);
+border-radius: 4px;
+}
+
+#resultsList::-webkit-scrollbar-thumb {
+background: var(--jeju-green);
+border-radius: 4px;
+}
+
+#resultsList::-webkit-scrollbar-thumb:hover {
+background: var(--jeju-orange);
+}
+
+/* 카드 헤더 스타일 */
+.card-header {
+background-color: var(--jeju-green);
+color: white;
+}
+
+/* 상세 정보 라벨 스타일 */
+.detail-item strong {
+color: var(--jeju-green);
+}
+
+/* 색상 변수 정의 */
+:root {
+    --jeju-orange: #FF8C0A;    /* 감귤 */
+    --jeju-green: #1B7B5D;     /* 한라산 */
+    --jeju-gray: #4B4B4B;      /* 현무암 */
+    --jeju-yellow: #FFB81C;    /* 유채꽃 */
+    
+    /* 연한 버전의 색상들 */
+    --jeju-orange-light: #FFF3E0;
+    --jeju-green-light: #E8F5F0;
+    --jeju-gray-light: #F5F5F5;
+    --jeju-yellow-light: #FFF8E7;
+}
+
+/* 검색 버튼 스타일 */
+#searchButton {
+    background-color: var(--jeju-orange);
+    color: white;
+}
+
+#searchButton:hover {
+    background-color: var(--jeju-yellow);
+}
+
+/* 상세 정보 카드 스타일 */
+.detail-card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: var(--jeju-green);
+    color: white;
+}
+
+.detail-item {
+    background-color: var(--jeju-gray-light);
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.detail-item:hover {
+    background-color: var(--jeju-orange-light);
+}
+
+.detail-item strong {
+    color: var(--jeju-green);
+}
